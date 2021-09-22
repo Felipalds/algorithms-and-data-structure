@@ -1,5 +1,5 @@
 # Sorting algorithm
-# Given an array n, with 5 random numbers, sort this array increasingly to a new array m
+# Given an array n, with 5 random numbers, sort this array increasingly
 
 # len_n = len(n)
 # while(len(m) < len_n):
@@ -13,7 +13,7 @@
 #     m.append(minor_value)
 # # print(n, m)
 
-n = [5, 3, 1, 9, 4]
+n = [5, 3, 1, 9, 4, 1, 2, 3, 4]
 print(n)
 c = 1
 while c < len(n):
