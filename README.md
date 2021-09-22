@@ -1,4 +1,4 @@
-# algorithms-and-data-strucure
+# algorithms-and-data-structure
 Exercises of algorithms and data structure using Python. From the simplest to the most advanced.
 
 > Before there were computers, there were algorithms.
