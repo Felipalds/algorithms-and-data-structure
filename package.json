@@ -1,0 +1,23 @@
+{
+  "name": "algorithms-and-data-structure",
+  "version": "1.0.0",
+  "description": "Exercises of algorithms and data structure using Python. From the simplest to the most advanced.",
+  "main": "Agruping_arrays.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" : "nodemon Agruping_arrays.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Felipalds/algorithms-and-data-structure.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Felipalds/algorithms-and-data-structure/issues"
+  },
+  "homepage": "https://github.com/Felipalds/algorithms-and-data-structure#readme",
+  "dependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
