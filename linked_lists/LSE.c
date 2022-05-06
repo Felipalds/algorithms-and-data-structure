@@ -1,21 +1,29 @@
-// listSE.c
-// Exemplos de algoritmos com listas encadeadas
+/* 2 - escrever uma função para inserir um elemento em uma lista em uma dada posição
+	- pos <= 0 insere na esquerda
+	- pos >= tamanho da lista, insere no fim
+	- 0 < pos <= tamanho
+
+   3 - escrever uma função para remover um elemento em uma dada posição da lista
+   4 - fazer uma função para escrever os elementos da lista em ordem inversa sem inverter a lista
+
+   1 - escrever uma função para remover um elemento da lista dado o seu valor
+   2- escrever uma função de concatenação para listas
+   3- escrever uma função para contar o número de ocorrências de um elemento X em uma lista L
+   4- escrever uma função removeall, que remove todas as ocorrências de x em l1.
+*/
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
 
-// define o tipo de dado a ser colocado na lista
+// ============================
 typedef short Tdata; 
-
-//tipo de dado para lista encadeada
 typedef  struct TNode
 {
-	Tdata info; // dado armazenado no nó
-	struct TNode *next;	// ponteiro para o próximo nó
+	Tdata info;
+	struct TNode *next;
 } TNode;
-
 typedef struct TListSE
 {
 	TNode *first;
@@ -23,13 +31,7 @@ typedef struct TListSE
 	short length;
 } TListSE;
 
-//===========================================
-//
-// Funções sobre listas encadeadas
-//
-//===========================================
-
-// Inicialização da lista
+// ============================
 void initList(TListSE *L)
 {
 	L->first = NULL;
@@ -37,7 +39,6 @@ void initList(TListSE *L)
 	L->length = 0;
 }
 
-// destruição da lista
 void deleteList(TListSE *L)
 {
 	TNode *p = L->first;
@@ -51,13 +52,10 @@ void deleteList(TListSE *L)
 	L->last = NULL;
 }
 
-// verifica lista vazia
 bool emptyList(TListSE L)
 {
 	return (L.length == 0);
 }
-
-// escreve a lista;
 
 void printList(TListSE L)
 {
@@ -74,26 +72,24 @@ void printList(TListSE L)
 	printf("]");
 }
 
-// inserção pela esquerda
 short insertLeft(Tdata x, TListSE *L)
 {
 	TNode *aux;
 	aux = (TNode*)malloc(sizeof(TNode));
-	if (aux == NULL)	// falha na alocação
-		return 1;	// sinaliza com erro, deixando a lista original intacta
+	if (aux == NULL)
+		return 1;
 	else
-	{ // insere x na lista
-		aux->info = x;					// atribui x para o campo info
-		aux->next = L->first;		// insere o elemento antes do atual primeiro
-		L->first = aux;					// Faz o ponteiro do primeiro apontar para o novo nó
-		if (L->last == NULL)		// lista estava vazia
-			L->last = aux;				// primeiro elemento é também o último
-		L->length++;						// incrementa o tamanho da lista
-		return 0;								// fim normal
+	{
+		aux->info = x;
+		aux->next = L->first;
+		L->first = aux;
+		if (L->last == NULL)
+			L->last = aux;
+		L->length++;
+		return 0
 	}
 }
 
-// Inserção pela direita
 short insertRight(Tdata x, TListSE *L)
 {
 	TNode *aux = (TNode*)malloc(sizeof(TNode));
@@ -104,9 +100,9 @@ short insertRight(Tdata x, TListSE *L)
 		aux->info = x;
 		aux->next = NULL;
 	
-		if (L->last == NULL)		// lista está vazia
-			L->first = L->last = aux; // atualiza primeiro e último
-		else                            // atualiza só o último
+		if (L->last == NULL)
+			L->first = L->last = aux;
+		else
 		{
 			L->last->next = aux;
 			L->last = aux;
@@ -116,42 +112,36 @@ short insertRight(Tdata x, TListSE *L)
 	}
 }
 
-// insert array
-
-// remoção pela esquerda
 void removeFirst(TListSE *L)
 {
-	TNode *aux = L->first;	// guarda o nó a ser removido em aux
-	L->first = L->first->next;	// avança para o próximo nó
-	free(aux)	;									// libera aux
-	if (L->first == NULL)		// Lista ficou vazia
-		L->last = NULL;			// Anula o last também
-	L->length--;						// reduz o tamanho
+	TNode *aux = L->first;
+	L->first = L->first->next;
+	free(aux);
+	if (L->first == NULL)
+		L->last = NULL;
+	L->length--;
 }
-
-// remoção pela direita
 
 void removeLast(TListSE *L)
 {
 	TNode *aux = L->first;
 	
-	if (L->first == L->last)		// há apenas um elemento na lista
+	if (L->first == L->last)
 	{
-		free(L->first);					// libera o nó first
-		L->last = L->first =NULL;	// anula tudo
+		free(L->first);
+		L->last = L->first =NULL;
 	}
 	else
-	{	// tem mais de um na lista
-		while (aux->next->next != NULL)		// procura pelo penúltimo
+	{
+		while (aux->next->next != NULL)
 			aux = aux->next;
-		L->last = aux;								// penúltimo é novo último
-		free(aux->next);							// libera o último
-		L->last->next = NULL;			// anula o nó depois do último
+		L->last = aux;
+		free(aux->next);
+		L->last->next = NULL;
 	}
 	L->length--;
 }
 
-// Busca um elemento na lista
 TNode* searchList(Tdata x, TListSE L)
 {
 	TNode *aux = L.first;
@@ -165,7 +155,6 @@ Tdata sumList(TListSE L)
 {
 	TNode *aux = L.first;
 	Tdata s = 0;
-	
 	while (aux)
 	{
 		s += aux->info;
@@ -174,12 +163,11 @@ Tdata sumList(TListSE L)
 	return s;
 }
  
- Tdata avgList(TListSE L)
- {
-	 return (sumList(L)/L.length);
- }
+Tdata avgList(TListSE L)
+{
+	return (sumList(L)/L.length);
+}
 
-// decimal para binário
 void dec2bin(Tdata num, TListSE* L)
 {
 	Tdata r;
@@ -192,10 +180,6 @@ void dec2bin(Tdata num, TListSE* L)
 	}
 	insertLeft(num, L);
 }
-
-
-
-// binário para decimal
 
 Tdata bin2dec(TListSE L)
 {
@@ -210,9 +194,6 @@ Tdata bin2dec(TListSE L)
 	return n;
 }
 
-
-// inversão de lista
-
 void invertList(TListSE *L)
 {
 	TNode *ant; // valor anterior ao first - null
@@ -223,22 +204,14 @@ void invertList(TListSE *L)
 
 	while(L->first != NULL)
 	{
-		seg = seg->next;
+		seg = L->first->next;
 		L->first->next = ant;
 		ant = L->first;
 		L->first = seg;
 	}
-
-	// first recebe ant
 	L->first = ant;
 }
 
-/* 
-	inserir um elemento em uma posição qualquer da lista
-	- se pos == 0 insere na esquerda
-	- se pos >= tamanho, insere na direita
-	- se 0 < pos < tamanho, insere deslocando os elementos pra trás
-*/
 void insert(TListSE *L, short position, Tdata val)
 {
 	int k = 0;
@@ -262,9 +235,6 @@ void insert(TListSE *L, short position, Tdata val)
 	L->length = L->length + 1;
 
 }
-
-
-
 
 
 //===========================================
