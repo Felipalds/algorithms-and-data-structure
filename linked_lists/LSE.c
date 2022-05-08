@@ -1,14 +1,4 @@
-/* 2 - escrever uma função para inserir um elemento em uma lista em uma dada posição
-	- pos <= 0 insere na esquerda
-	- pos >= tamanho da lista, insere no fim
-	- 0 < pos <= tamanho
-
-   3 - escrever uma função para remover um elemento em uma dada posição da lista
-   4 - fazer uma função para escrever os elementos da lista em ordem inversa sem inverter a lista
-
-   1 - escrever uma função para remover um elemento da lista dado o seu valor
-   2- escrever uma função de concatenação para listas
-   3- escrever uma função para contar o número de ocorrências de um elemento X em uma lista L
+/*
    4- escrever uma função removeall, que remove todas as ocorrências de x em l1.
 */
 
@@ -69,7 +59,7 @@ void printList(TListSE L)
 			printf(", ");
 		p = p->next;
 	}
-	printf("]");
+	printf("]\n");
 }
 
 short insertLeft(Tdata x, TListSE *L)
@@ -86,7 +76,7 @@ short insertLeft(Tdata x, TListSE *L)
 		if (L->last == NULL)
 			L->last = aux;
 		L->length++;
-		return 0
+		return 0;
 	}
 }
 
@@ -215,27 +205,98 @@ void invertList(TListSE *L)
 void insert(TListSE *L, short position, Tdata val)
 {
 	int k = 0;
+	short l = L->length;
 	TNode *aux;
 	TNode *new = (TNode*)malloc(sizeof(TNode));
 
-	if(!new){
-		exit(1);
-	}
+	if(position <= 0){
+		insertLeft(val, L);
+	} else if(position > l){
+		insertRight(val, L);
+	} else {
+		if(!new){
+			exit(1);
+		}
 
-	new->info = val;
+		new->info = val;
+		aux = L->first;
+		
+		while(k < position - 1)
+		{
+			aux = aux->next;
+			k++;
+		}
+		new->next = aux->next;
+		aux->next = new;
+		L->length = L->length + 1;
+	}
+}
+
+void removeElement(TListSE *L, Tdata position)
+{
+	short k = 0;
+	TNode *aux, *aux2;
 	aux = L->first;
-	
 	while(k < position - 1)
 	{
 		aux = aux->next;
 		k++;
 	}
-	new->next = aux->next;
-	aux->next = new;
-	L->length = L->length + 1;
-
+	aux2 = aux->next->next;
+	free(aux->next);
+	aux->next = aux2;
+	L->length--;
 }
 
+void printInvert(TNode *L)
+{
+	if(!L) return; // its over
+	else{
+		printInvert(L->next);
+		printf(" %hd ",L->info);
+		return;
+	}
+}
+
+void removeByValue(TListSE *L, Tdata x)
+{
+	if(L->first->info)
+		removeFirst(L);
+	else if(L->last->info)
+		removeLast(L);
+	else {
+		TNode *aux = L->first;
+		TNode *aux2;
+		while(aux->next->info != x)
+		{
+			aux = aux->next;
+		}
+
+		aux2 = aux->next->next;
+		free(aux->next);
+		aux->next = aux2;
+		L->length--;
+	}
+}
+
+short countElement(TListSE *L, Tdata x)
+{
+	TNode *aux = L->first;
+	short count = 0;
+	while(aux)
+	{
+		if(aux->info == x) count++;
+		aux = aux->next;
+	}
+	return count;
+}
+
+void listConcat(TListSE *L1, TListSE *L2)
+{
+	L1->last->next = L2->first;
+	L1->length += L2->length;
+	L1->last = L2->last;	
+}
 
 //===========================================
 
@@ -243,11 +304,12 @@ int main()
 {
   // Declaração de variáveis
   TListSE L1;
+  TListSE L2;
 
   // Inicialização da lista
-  printf("Inicializando a lista L1...\n");
   initList(&L1);
-  printf("Lista inicializada!\n");
+  initList(&L2);
+
   
   // Verificando lista vazia
   emptyList(L1)? printf("Lista vazia!\n"): printf("Lista não vazia!\n");
@@ -257,11 +319,20 @@ int main()
   insertLeft(2, &L1);
   insertLeft(3, &L1); 
   
-  // insere pela esquerda
+  // insere pela direita
   insertRight(4, &L1); 
   insertRight(5, &L1);
   insertRight(6, &L1); 
 
+  insertRight(10, &L2); 
+  insertRight(20, &L2);
+  insertRight(49, &L2); 
+
+
+  printf("L1 = ");
+  printList(L1);
+
+  printf("Inserindo um valor: \n");
   insert(&L1, 3, 10);
   
   // Imprimindo a lista
@@ -269,14 +340,33 @@ int main()
   printList(L1);
   printf("\n");
 
-  // invertendo a lista
-  invertList(&L1);
-  printf("L invertida");
+  removeElement(&L1, 3);
+  
+  printf("Removendo um valor: \n");
   printList(L1);
   printf("\n");
-  
+
+  // invertendo a lista
+  invertList(&L1);
+  printf("L invertida\n");
+  printList(L1);
+  printf("\n");
+
+  printf("Printando invertido \n");
+  printInvert(L1.first);
+
+  printf("\nRemovendo um valor específico: \n");
+  removeByValue(&L1, 6);
+  printf("L invertida\n");
+  printList(L1);
+
+  printf("Numero de elementos na lista : %hd ", countElement(&L1, 144));
+
+  printf("L1 + L2 = ");
+  listConcat(&L1, &L2);
+  printList(L1);
   // Deletando a lista
-  printf("Deletando a lista L1...\n");
+  printf("\nDeletando a lista L1...\n");
   deleteList(&L1);
   printf("Lista deletada!\n");
   
