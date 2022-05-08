@@ -298,6 +298,27 @@ void listConcat(TListSE *L1, TListSE *L2)
 	L1->last = L2->last;	
 }
 
+void removeAll(TListSE *L, Tdata val)
+{
+	if(L->first->info == val) removeFirst(L);
+
+	TNode *aux, *aux2;
+	aux = L->first;
+	while(aux)
+	{
+		if(aux->next->info == val){
+			aux2 = aux->next->next;
+			free(aux->next);
+			aux->next = aux2;
+			if(aux->next == NULL) break;
+		} else {
+			aux = aux->next;
+		}
+	}
+	if(L->first->info == val) removeFirst(L);
+
+}
+
 //===========================================
 
 int main()
@@ -317,12 +338,15 @@ int main()
   // insere pela esquerda
   insertLeft(1, &L1); 
   insertLeft(2, &L1);
-  insertLeft(3, &L1); 
+  insertLeft(1, &L1); 
+  insertLeft(1, &L1);
+  insertLeft(1, &L1); 
+
   
   // insere pela direita
-  insertRight(4, &L1); 
-  insertRight(5, &L1);
-  insertRight(6, &L1); 
+  insertRight(1, &L1); 
+  insertRight(2, &L1);
+  insertRight(1, &L1); 
 
   insertRight(10, &L2); 
   insertRight(20, &L2);
@@ -332,6 +356,11 @@ int main()
   printf("L1 = ");
   printList(L1);
 
+  printf("Removendo valores \n");
+  removeAll(&L1, 1);
+  printf("L1 = ");
+  printList(L1);
+	/*
   printf("Inserindo um valor: \n");
   insert(&L1, 3, 10);
   
@@ -365,8 +394,9 @@ int main()
   printf("L1 + L2 = ");
   listConcat(&L1, &L2);
   printList(L1);
+  */
   // Deletando a lista
-  printf("\nDeletando a lista L1...\n");
+  printf("Deletando a lista L1...\n");
   deleteList(&L1);
   printf("Lista deletada!\n");
   
