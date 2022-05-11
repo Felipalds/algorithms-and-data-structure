@@ -271,7 +271,6 @@ void removeByValue(TListSE *L, Tdata x)
 		{
 			aux = aux->next;
 		}
-
 		aux2 = aux->next->next;
 		free(aux->next);
 		aux->next = aux2;
