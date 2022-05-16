@@ -1,5 +1,5 @@
 /*
-   4- escrever uma função removeall, que remove todas as ocorrências de x em l1.
+   Escrever uma função void split que recebe uma lista L1 e divida em duas Listas, indo de first até pos -1 e L2 iniciando em pos - limpe L2 antes
 */
 
 #include <stdlib.h>
@@ -317,6 +317,7 @@ void removeAll(TListSE *L, Tdata val)
 	if(L->first->info == val) removeFirst(L);
 
 }
+
 
 //===========================================
 

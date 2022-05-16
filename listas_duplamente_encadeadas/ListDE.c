@@ -1,9 +1,9 @@
-// 1. Escrever uma função para inverter uma lista duplamente encadeada
-// 2. Escrever uma função para inserir um elemento em uma lista duplamente encadeada dada uma posição
+// 1. Escrever uma função para inverter uma lista duplamente encadeada = diff
+// 2. Escrever uma função para inserir um elemento em uma lista duplamente encadeada dada uma posição = diff
 // 3. Escrever uma função para remover um elemente dada uma posição na lista duplamente encadeada
 // 4. Escrever uma função para remover um elemento da lista, dado o seu valor
-// 5. Escrever uma funlçao de concatenação para listas "TListDE lstcat(TLitsDE &L1, TListDE L2")
-// 6. Escrever uma função para contar o numero de ocorrencias de um elemento x em uma lista L
+// 5. Escrever uma funlçao de concatenação para listas "TListDE lstcat(TLitsDE &L1, TListDE L2") = diff
+// 6. Escrever uma função ara contar o numero de ocorrencias de um elemento x em uma lista L
 // 7. Escrever uma função que, dados um valor x e uma lista L, remova todas as ocorrencias de x L
 
 #include <stdlib.h>
@@ -107,64 +107,60 @@ short insertLeft(Tdata x, TListDE *L)
 // Inserção pela direita
 short insertRight(Tdata x, TListDE *L)
 {
+	printf("inserindo");
 	TNode *aux = (TNode*)malloc(sizeof(TNode));
-	if (aux == NULL)
+	if (aux == NULL){
+		printf("ERRO DE INSERÇÃO");
 		return 1;
+	}
 	else
 	{
 		aux->info = x;
-		aux->next = NULL;					// Não tem próximo
-		aux->prev = L->last;				// O anterior é o antigo último
-
-		if (L->last == NULL)				// Lista estava vazia
-			L->first = L->last = aux;	// atualiza primeiro e último
-		else                          // atualiza só o último
+		aux->next = NULL;
+		aux->prev = L->last;
+		if (L->last == NULL)
+			L->first = L->last = aux;
+		else
 		{
-			L->last->next = aux;			// liga o novo último nó
-			L->last = aux;					// atualiza o ponteiro para o novo último
+			L->last->next = aux;
+			L->last = aux;
 		}
-		L->length++;						// atualiza o comprimento
+		L->length++;
 		return 0;
 	}
 }
 
-// remoção pela esquerda
 void removeFirst(TListDE *L)
 {
-	TNode *aux = L->first;		// Guarda o nó a ser removido em aux
-	L->first = L->first->next;	// Avança para o próximo nó
-	free(aux)	;					// libera aux
-	if (L->first == NULL)		// Lista ficou vazia
-		L->last = NULL;			// Anula o last também
+	TNode *aux = L->first;
+	L->first = L->first->next;
+	free(aux);
+	if (L->first == NULL)
+		L->last = NULL;
   else
   L->first->prev = NULL;
-	L->length--;					// reduz o tamanho
+	L->length--;
 }
-
-// remoção pela direita
 
 void removeLast(TListDE *L)
 {
-	TNode *aux = L->last;		// Guarda o nó a ser removido em aux
-	L->last = L->last->prev;	// volta para o nó anterior
-	free(aux)	;					// libera aux
-	if (L->last == NULL)			// Lista ficou vazia
-		L->first = NULL;			// Anula o first também
+	TNode *aux = L->last;
+	L->last = L->last->prev;
+	free(aux);
+	if (L->last == NULL)
+		L->first = NULL;
   else
-    L->last->next = NULL;			// Anula o próximo do novo último
-	L->length--;					// reduz o tamanho
+    L->last->next = NULL;
+	L->length--;
 }
 
-// Busca um elemento na lista
 TNode* searchList(Tdata x, TListDE L)
 {
-	TNode *aux = L.first;
-	
+	TNode *aux = L.first;	
 	while (aux && aux->info != x)
 		aux = aux->next;
 	return aux;
 }
-
 
 Tdata sumList(TListDE L)
 {
@@ -184,7 +180,6 @@ Tdata sumList(TListDE L)
 	 return (sumList(L)/L.length);
  }
 
-// decimal para binário
 TListDE *dec2bin(Tdata num)
 {
 	Tdata r;
@@ -201,9 +196,6 @@ TListDE *dec2bin(Tdata num)
 	return L;
 }
 
-
-// binário para decimal
-
 Tdata bin2dec(TListDE L)
 {
 	Tdata i = 0, n = 0;
@@ -217,6 +209,30 @@ Tdata bin2dec(TListDE L)
 	return n;
 }
 
+void invertList(TListDE *L)
+{
+	printf("aaaa");
+	if(L->length <= 1) 
+		printf("Lista possui 1 ou nenhum elemento! Nada será realizado.\n");
+	else
+	{
+		printf("Lista possui mais de um elemento, invertendo . . .");
+		TNode *seg, *atu;
+		L->last = L->first;
+		
+		while(L->first);
+		{
+			printf("aaaaaaaaaaaaa ");
+			seg = L->first->next;
+			atu = L->first;
+			L->first->next = L->first->prev;
+			L->first->prev = seg;
+			L->first = seg;
+		}
+		L->first = atu;
+	}
+}
+
 //===========================================
 
 int main()
@@ -227,20 +243,34 @@ int main()
 	TNode *n;
 	
 	initList(&L1);
-	printf("Lista Inicializada!\n\n");
+	printf("Lista Inicializada!");
 
-	printf("Digite um valor a ser inserido (-1 para sair)");
+	// printf("Digite um valor a ser inserido (-1 para sair)");
 	
-	while(scanf("%hd", &k) && (k != -1))
-	{
-		if(!insertRight(k, &L1)) printf("%hd inserido!", k);
-		else printf("Erro na inserção!");
-	}
+	// while(scanf("%hd", &k) && (k != -1))
+	// {
+	// 	if(!insertRight(k, &L1)) printf("%hd inserido!", k);
+	// 	else printf("Erro na inserção!");
+	// }
+	printf("asdasdasd");
+	insertRight(1, &L1);
+	insertRight(2, &L1);
+	insertRight(3, &L1);
+	insertRight(4, &L1);
+
+
+	printf("aaaa");
+
+	printList(L1, 0);
+
+	printf("aaaa");
+	invertList(&L1);
+	printf("aaaa");
+
 	printList(L1, 0);
 
 	deleteList(&L1);
-  	printf("Lista apagada!");
-    deleteList(&L2);
+  	printf("\nLista apagada!");
 	
 	return 0;
 }
