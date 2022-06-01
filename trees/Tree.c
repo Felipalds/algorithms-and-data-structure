@@ -12,12 +12,48 @@ void printBT(TreeNode *bt, short level)
         return;
     else
     {
-        prinBT(bt=>right, level + 1);
+        printBT(bt->right, level + 1);
         for(i = 0; i < level; i++)
             printf("...|");
         printf("%hd\n", bt->info);
         printBT(bt->left, level + 1);
     }
+}
+
+// ====================
+//  Inserção na árvore
+// ====================
+TreeNode* BTinsert(Tdata x, TreeNode *bt)
+{
+    TreeNode *aux;
+    //verifica se a raiz é nula
+    if(!bt)
+    {
+        aux = (TreeNode*)malloc(sizeof(TreeNode));
+        if(!aux)
+        {
+            printf("Erro na alocação \n");
+            return NULL;
+        }
+        else
+        {
+            aux->info = x;
+            aux->left = NULL;
+            aux->right == NULL;
+            return aux;
+        }
+    }
+    else //raiz não é nula, decide se insere à esquerda ou à direita
+        if(x < bt->info)
+        {
+            bt->left = BTinsert(x, bt->left);
+            return bt;
+        }
+        else
+        {
+            bt->right = BTinsert(x, bt->right);
+            return bt;
+        }
 }
 
 // \t é uma tabulação, um TAB
@@ -30,7 +66,7 @@ int main(){
     {
         printf("Árvores Binárias de Busca (BST)\n");
         printf("Árvore atual: \n \n");
-        // printBT(BT, 0);
+        printBT(BT, 0);
         printf("\n\n");
         printf("Selecione a opção desejada: \n\n");
         printf("\t(0)Sair\n");
