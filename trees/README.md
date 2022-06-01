@@ -30,3 +30,24 @@
     // se começar pelo 2, terá somente lado direito?
     - a árvore depente da ordem de inserção
 }
+
+2. busca (recursivo): {
+
+}
+
+## Percursos / encaminhamentos em árvores
+- ### Busca em largura (amplitude)
+    - Busca realizada nível a nível da árvore, iniciando com o nível da raiz, depois indo para o nível de seus filhos, depois para o nível de seus netos, e assim sucessivamente.
+    - Percurso em largura = (root, root-left, root-right, root-left-left, root-left-right, root-right-left, root-right-right, root-left-left-left, ...)
+- ### Busca em profundidade
+    - considere o comando raíz como alguma ação a ser tomada no root, como uma visita (printf por exemplo)
+    1. #### Pré-ordem (recursivo)
+        - Busca abrindo todas as possibilidades de cada nó
+        - Indo o mais fundo possível em cada nó
+        - Raíz -> pré-ordem(esquerda) -> pré-ordem(direita)
+        - mais usada para percursos ou trajetos, não para valores
+    2. #### Ordem
+        - ordem(esquerda) -> raiz -> ordem(direita)
+        - mais usada para valores, não para percursos
+    3. #### Pós-ordem
+        - pós-ordem(esquerda) -> pós-ordem(direita) -> raiz
