@@ -56,10 +56,48 @@ TreeNode* BTinsert(Tdata x, TreeNode *bt)
         }
 }
 
+TreeNode *BTdeleteMerge ( Tdata x, TreeNode *bt)
+{
+    TreeNode *p, *p2;
+    if(bt->info == x)
+    {
+        //apaga raiz
+        if(bt->left == bt->right)
+        {
+            free(bt);
+            return NULL;
+        }
+        else if(bt->left == NULL)
+        {
+            p = bt->right;
+            free(bt);
+            bt = NULL;
+            return p;
+        }
+        else
+        {
+            p2 = bt->left;
+            p = bt->left;
+            while(p->right != NULL)
+                p = p->right;
+
+            p->right = bt->right;
+            free(bt);
+            bt = NULL;
+            return p2;
+        }
+    }
+    if(bt->info > x)
+        bt->left = BTdeleteMerge(x, bt->left);
+    else    
+        bt->right = BTdeleteMerge(x, bt->right);
+    return bt;
+}
+
 // ===================
 //  Remoção da árvore
 // ===================
-TreeNode *BTdelete(Tdata x, TreeNode *bt)
+TreeNode* BTdelete(Tdata x, TreeNode *bt)
 {
     TreeNode *p, *p2;
     if(bt->info == x)
@@ -205,6 +243,49 @@ short NodeDistance(TreeNode *bt, short x, short y)
     }
 }
 
+//remove by copy
+TreeNode* FindPredecessor(TreeNode *bt)
+{
+    TreeNode* pbt = bt;
+    pbt = pbt->left;
+    while(pbt->right)
+        pbt = pbt->right;
+
+    return pbt;
+}
+
+TreeNode* RemoveByCopy(short value, TreeNode *bt)
+{
+    //TreeNode* toBeRemoved = BTsearch(value, bt);
+    TreeNode *p;
+    if(!bt)
+        return NULL;
+    else if( bt->info == x )
+    {
+        if(bt->left == bt->right)
+            free(bt);
+            return NULL;
+        else if(bt->left == NULL)
+        {
+            p=bt->right;
+            free(bt);
+            bt = NULL;
+            return p;
+        }
+        else
+        {
+            p = FindPredecessor(bt);
+            bt->info = p->info;
+            bt->left = RemoveByCopy(p->info, bt->left);
+        }
+    }
+    else if(bt->info > x)
+        bt->left = RemoveByCopy(x, bt->left);
+    else
+        bt->right = RemoveByCopy(x, bt->right);
+    return bt;
+}
+
 // \t é uma tabulação, um TAB
 int main(){
     TreeNode *BT = NULL; //ponteiro pára a raiz para a arvore
@@ -222,7 +303,7 @@ int main(){
         printf("Selecione a opção desejada: \n\n");
         printf("\t(0)Sair\n");
         printf("\t(1)Inserir elemento\n");
-        printf("\t(2)Remover elemento\n");
+        printf("\t(2)Remover elemento por merge\n");
         printf("\t(3)Procurar elemento\n");
         printf("\t(4)Percurso em largura\n");
         printf("\t(5)Percurso pré-ordem\n");
@@ -232,7 +313,7 @@ int main(){
         printf("\t(9)Largura da árvore\n");
         printf("\t(10)Altura do nó\n");
         printf("\t(11)Distâncias entre nós\n");
-
+        printf("\t(12)Remover elemento por cópia\n");
 
         scanf("%d", &op);
 
@@ -299,9 +380,14 @@ int main(){
                 short value1, value2;
                 scanf("%hd %hd", &value1, &value2);
                 printf(" > > > Distância é: %hd \n \n", NodeDistance(BT, value1, value2));
+            case 12:
+                printf("\t\t >> Remoção por cópia << \n");
+                short x;
+                scanf("%hd", &x);
+                RemoveByCopy(x, BT);
         }
 
-    }while(op != 0);
+    } while(op != 0);
     
     printf("Limpando a árvore . . .\n");
     //BTclear(BT);
