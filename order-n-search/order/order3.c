@@ -9,7 +9,7 @@
 typedef enum {false, true} bool;
 
 // Declaração do tipo TNum
-typedef short Tnum;
+typedef int Tnum;
 
 // Tipo de dado a ser ordenado
 typedef struct
@@ -196,37 +196,41 @@ void quickSort(Tdado V[], Tnum low, Tnum high, int compara())
 // Principal
 int main()
 {
-    const short MAX = 13;
-	Tdado V[SHRT_MAX];
-	Tnum n, k, p; // quantidade de números a serem gerados e indice
-	clock_t tempo;
-	
-	scanf("%hd", &n);
-		
-	srand(time(NULL));	// inicializa o gerador de números aleatórios
-	
-	for (int i = 0; i < n; i++)
-	{
-		V[i].key = rand() % MAX + 1;
-		V[i].seq = i + 1;
-	}
-	escreve(V, n);
-	tempo = clock();
-	
-	// Use aqui os algoritmos de ordenação
-	// bubbleSort(V, n, compara2);
-	// shakerSort(V, n, compara2);
-	// insertionSort(V, n, compara2);
-	// selectionSort(V, n, compara2);
-	// mergeSort(V, 0, n - 1, compara2);
-	// quickSort(V, 0, n - 1, compara2);
-	// qsort(V, n, sizeof(Tdado), compara2);
-	
-	tempo = clock() - tempo;
-	printf("\n");
-	printf("\n");
-	escreve(V, n);
-	printf("Tempo gasto = %lf segundos\n", ((double)tempo) / CLOCKS_PER_SEC);
-	k = rand() % MAX + 1;
+    for(Tnum c = 200; c <= 10000; c+=200){
+        const short MAX = 13;
+        Tdado V[SHRT_MAX];
+        Tnum n, k, p; // quantidade de números a serem gerados e indice
+        n = c;
+
+        clock_t tempo;
+        
+            
+        srand(time(NULL));	// inicializa o gerador de números aleatórios
+        
+        for (int i = 0; i < n; i++)
+        {
+            V[i].key = rand() % MAX + 1;
+            V[i].seq = i + 1;
+        }
+        //escreve(V, n);
+        tempo = clock();
+        
+        // Use aqui os algoritmos de ordenação
+        // bubbleSort(V, n, compara2);
+        // shakerSort(V, n, compara2);
+        // insertionSort(V, n, compara2);
+        // selectionSort(V, n, compara2);
+        // mergeSort(V, 0, n - 1, compara2);
+        //quickSort(V, 0, n - 1, compara2);
+        qsort(V, n, sizeof(Tdado), compara2);
+        
+        tempo = clock() - tempo;
+        //printf("\n");
+        //printf("\n");
+        //escreve(V, n);
+        printf("%lf\n", ((double)tempo) / CLOCKS_PER_SEC);
+        k = rand() % MAX + 1;
+    }
+    
 	return 0;
 }

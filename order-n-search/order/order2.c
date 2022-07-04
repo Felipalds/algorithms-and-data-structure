@@ -219,12 +219,12 @@ int main()
 	printf("\n");
 	escreve(V, n);
 	printf("Tempo gasto = %f segundos\n", ((float)tempo) / CLOCKS_PER_SEC);
-	k = rand() % MAX + 1;
+	/*k = rand() % MAX + 1;
 	printf("Procurando por %hd...\n", k);
 	p = seqSearch(k, V, n);
 	if (p < 0)
 		printf(" Não encontrado!\n");
 	else
-		printf("%hd encontrado na posição %hd.\n", k, p); 
+		printf("%hd encontrado na posição %hd.\n", k, p); */
 	return 0;
 }
