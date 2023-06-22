@@ -84,7 +84,7 @@ short insertRight(Tdata x, TListSE *L)
 {
 	TNode *aux = (TNode*)malloc(sizeof(TNode));
 	if (aux ==NULL)
-		return 1;
+        return 1;
 	else
 	{
 		aux->info = x;
