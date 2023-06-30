@@ -109,14 +109,15 @@ func main () {
         for j := 0; j < roundsAmount; j++ {
             var participantsPlaying int
             var currentState int
-            
             fmt.Scanf("%d %d", &participantsPlaying, &currentState)
             for k := 0; k < participantsPlaying; k++ {
                 var playerState int
                 fmt.Scanf("%d", &playerState)
-                player := myList.Pop()
-                if playerState == currentState {
-                    myList.Push(player)  
+                if playerState != currentState {
+                    myList.Pop()
+                } else {
+                    myList.first = myList.first.next
+                    myList.last = myList.last.next
                 }
             }
         }
